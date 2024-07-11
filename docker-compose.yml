@@ -1,0 +1,38 @@
+services:
+  python_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/
+      - PYTHONUNBUFFERED=1
+    # volumes:
+    #   - .:/code
+    #   - /code/__pycache__
+    depends_on:
+      - mongodb
+    networks:
+      - app-network
+    develop:
+      watch:
+        - action: sync
+          path: ./app
+          target: /code
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - app-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  app-network:
+    driver: bridge
