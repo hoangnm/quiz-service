@@ -5,6 +5,11 @@
 docker-compose up
 ```
 
+## Run test
+```
+poetry run pytest
+```
+
 ## Init data
 ```
 python run init_data.py
@@ -17,6 +22,7 @@ http://localhost:8000/docs
 - Python
 - FastAPI with uvicorn
 - MongoDB with motor
+- Poetry for dependency management
 
 ## Folder structure
 Main code is put into `app` folder
@@ -29,5 +35,5 @@ Later on, once the service is more complex, we can add uplift 3 layers architect
 
 ## TODO
 - [x] setup unit test
-- [ ] add middleware to get user id from jwt token
+- [x] add middleware to get user id
 - [ ] create participant api

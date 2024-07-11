@@ -1,4 +1,5 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
+from fastapi.responses import JSONResponse
 from app.api.main import api_router
 import logging
 
@@ -21,6 +22,21 @@ async def auth_middleware(request: Request, call_next):
     request.state.user_id = 1
     response = await call_next(request)
     return response
+
+@app.middleware("http")
+async def global_exception_middleware(request: Request, call_next):
+    try:
+        return await call_next(request)
+    except HTTPException as http_exception:
+        return JSONResponse(
+            status_code=http_exception.status_code,
+            content={"error": "Client Error", "message": str(http_exception.detail)},
+        )
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"error": "Internal Server Error", "message": "An unexpected error occurred."},
+        )
 
 if __name__ == "__main__":
     import uvicorn
