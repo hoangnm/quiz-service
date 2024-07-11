@@ -28,6 +28,6 @@ We follow 3 layers architecture:
 Later on, once the service is more complex, we can add uplift 3 layers architecture to "clean architecture" with domain driven design.
 
 ## TODO
-- [ ] setup unit test
+- [x] setup unit test
 - [ ] add middleware to get user id from jwt token
 - [ ] create participant api
